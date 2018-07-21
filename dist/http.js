@@ -3,11 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const http_1 = require("http");
-const socket_1 = require("./socket");
-class HttpServer {
-    constructor() {
+var express_1 = __importDefault(require("express"));
+var http_1 = require("http");
+var socket_1 = require("./socket");
+var cors_1 = __importDefault(require("cors"));
+var HttpServer = (function () {
+    function HttpServer() {
         this.app = express_1.default();
         this.port = process.env.PORT || HttpServer.PORT;
         this.server = http_1.createServer(this.app);
@@ -15,19 +16,22 @@ class HttpServer {
         this.setupRoutes();
         this.listen();
     }
-    setupRoutes() {
+    HttpServer.prototype.setupRoutes = function () {
+        this.app.use(cors_1.default());
         this.app.get('/', function (req, res) {
             res.send('Socket Server for ngPaint (https://github.com/jgluhov)');
         });
-    }
-    listen() {
-        this.server.listen(this.port, () => {
-            console.log('Running server on port %s', this.port);
+    };
+    HttpServer.prototype.listen = function () {
+        var _this = this;
+        this.server.listen(this.port, function () {
+            console.log('Running server on port %s', _this.port);
         });
-    }
-    getApp() {
+    };
+    HttpServer.prototype.getApp = function () {
         return this.app;
-    }
-}
-HttpServer.PORT = 8080;
+    };
+    HttpServer.PORT = 8080;
+    return HttpServer;
+}());
 exports.HttpServer = HttpServer;

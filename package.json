@@ -12,6 +12,7 @@
   "author": "Evgeny Glukhov <evglukhov@luxoft.com>",
   "license": "ISC",
   "dependencies": {
+    "@types/core-js": "^2.5.0",
     "@types/cors": "^2.8.4",
     "@types/express": "^4.16.0",
     "@types/node": "^10.5.2",
