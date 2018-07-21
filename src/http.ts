@@ -1,9 +1,10 @@
 import express from 'express';
 import { Server, createServer } from 'http';
 import { SocketServer } from './socket';
+import cors from 'cors';
 
 export class HttpServer {
-  public static readonly PORT: number = 80;
+  public static readonly PORT: number = 8080;
   private app: express.Application;
   private server: Server;
   private socketServer: SocketServer;
@@ -19,6 +20,7 @@ export class HttpServer {
   }
 
   private setupRoutes(): void {
+    this.app.use(cors())
     this.app.get('/', function (req, res) {
       res.send('Socket Server for ngPaint (https://github.com/jgluhov)');
     });

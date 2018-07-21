@@ -29,5 +29,5 @@ class HttpServer {
         return this.app;
     }
 }
-HttpServer.PORT = 80;
+HttpServer.PORT = 8080;
 exports.HttpServer = HttpServer;
