@@ -3,23 +3,25 @@ import { Server, createServer } from 'http';
 import { SocketServer } from './socket';
 
 export class HttpServer {
-  public static readonly PORT: number = 3000;
+  public static readonly PORT: number = 80;
   private app: express.Application;
   private server: Server;
   private socketServer: SocketServer;
   private port: number | string;
 
   constructor() {
-    this.createApp();
     this.app = express();
     this.port = process.env.PORT || HttpServer.PORT;
     this.server = createServer(this.app);
     this.socketServer = new SocketServer(this.server);
+    this.setupRoutes();
     this.listen();
   }
 
-  private createApp(): void {
-    this.app = express();
+  private setupRoutes(): void {
+    this.app.get('/', function (req, res) {
+      res.send('Socket Server for ngPaint (https://github.com/jgluhov)');
+    });
   }
 
   private listen(): void {

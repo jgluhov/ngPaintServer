@@ -8,15 +8,17 @@ const http_1 = require("http");
 const socket_1 = require("./socket");
 class HttpServer {
     constructor() {
-        this.createApp();
         this.app = express_1.default();
         this.port = process.env.PORT || HttpServer.PORT;
         this.server = http_1.createServer(this.app);
         this.socketServer = new socket_1.SocketServer(this.server);
+        this.setupRoutes();
         this.listen();
     }
-    createApp() {
-        this.app = express_1.default();
+    setupRoutes() {
+        this.app.get('/', function (req, res) {
+            res.send('Socket Server for ngPaint (https://github.com/jgluhov)');
+        });
     }
     listen() {
         this.server.listen(this.port, () => {
@@ -27,5 +29,5 @@ class HttpServer {
         return this.app;
     }
 }
-HttpServer.PORT = 3000;
+HttpServer.PORT = 80;
 exports.HttpServer = HttpServer;
